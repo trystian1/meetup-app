@@ -21,6 +21,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-sourcemaps": "^1.6.0",
     "react": "^15.0.2",
+    "react-dom": "^15.1.0",
     "require": "^2.4.20",
     "watchify": "^3.7.0"
   }
