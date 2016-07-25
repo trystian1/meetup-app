@@ -1,6 +1,12 @@
 import React from 'react';
 import MeetupForm from './meetupForm.jsx';
+import ModuleTitle from '../title/moduleTitle.jsx';
+import * as saveMeetupAction from '../actions/saveMeetupAction'
+import {connect} from 'react-redux';
+import {browserHistory} from 'react-router'
+import {bindActionCreators} from 'redux'
 import _ from 'lodash';
+import moment from 'moment'
 
 class MeetupComponent extends React.Component {
 
@@ -10,8 +16,15 @@ class MeetupComponent extends React.Component {
         eventData: {
           name: '',
           place: '',
-          date: ''
+          host: '',
+          startDate: moment.utc(new Date()).local().format('YYYY-MM-DDThh:mm'),
+          endDate: '',
+          eventType: '',
+          guest: '',
+          guests: [],
+          message: ''
         },
+        isValid: 'invalid',
         errors: {}
       }
     }
@@ -22,7 +35,13 @@ class MeetupComponent extends React.Component {
          value = event.target.value;
 
      this.state.eventData[field] = value;
-     this.validateInput(field, value);
+
+     this.validateFormData();
+
+     if (this.isValidForm()) {
+       this.state.isValid = 'valid';
+     }
+
      return this.setState({eventData: this.state.eventData});
 
    }
@@ -34,20 +53,42 @@ class MeetupComponent extends React.Component {
      switch(field) {
 
        case 'name':
-          if (value.length < 3) {
-            errors.name = 'First name should be atleast 3 characters';
+          if (!value) {
+            errors.name = 'Event name is required';
+          } else if (value.length < 3) {
+            errors.name = 'Event name should be atleast 3 characters';
           } else {
             errors.name = null;
           }
         break;
 
         case 'place':
-           if (value.length < 3) {
-             errors.name = 'The place should be atleast 3 characters';
-           } else {
-             errors.name = null;
-           }
+          if (!value) {
+            errors.place = 'Location is required';
+          } else {
+            errors.place = null;
+          }
          break;
+
+         case 'startDate':
+           if (!value) {
+             errors.startDate = 'A start date is required';
+           } else if (moment(value).isAfter(moment(this.state.endDate))) {
+             errors.startDate = 'Start date should be before end date';
+           } else {
+             errors.startDate = null;
+           }
+          break;
+
+          case 'endDate':
+            if (!value) {
+              errors.endDate = 'A end date is required';
+            } else if (moment(value).isBefore(moment(this.state.startDate))) {
+              errors.endDate = 'End date should be before start date';
+            } else {
+              errors.endDate = null;
+            }
+           break;
 
      }
 
@@ -55,8 +96,28 @@ class MeetupComponent extends React.Component {
 
    }
 
+   addGuest() {
+
+     var guest = this.state.eventData.guest,
+         guests =  this.state.eventData.guests,
+         guestItem;
+
+    guestItem = {
+      name: guest,
+      key: new Date().valueOf()
+    }
+    guests.push(guestItem);
+    this.setState({
+      guests: guests,
+      guest: null
+    })
+
+   }
+
    isValidForm() {
-     var isValid = true;
+
+     var isValid = true,
+         fields = []
 
      _.each(this.state.errors, function(error) {
 
@@ -69,30 +130,78 @@ class MeetupComponent extends React.Component {
      return isValid;
    }
 
+   validateFormData() {
+     var _this = this;
+
+     _.each(this.state.eventData, function(value, key) {
+       _this.validateInput(key, value);
+     });
+
+   }
+
    saveEvent(event) {
 
      event.preventDefault();
      event.stopPropagation();
 
+     this.validateFormData();
+     this.formatDates();
      if (!this.isValidForm()) {
        return;
      }
 
-     localStorage.setItem('event', JSON.stringify(this.state.eventData));
+     this.props.actions.saveMeetup(this.state.eventData).then(() => {
+       browserHistory.push('/meet-ups');
+     });
 
    }
 
+   formatDates() {
+     this.state.eventData['startDate'] =
+      moment(this.state.eventData['startDate']).format('DD-MM-YYYY h:mm');
+     this.state.eventData['endDate'] =
+      moment(this.state.eventData['endDate']).format('DD-MM-YYYY h:mm');
+   }
+
     render() {
+
       return(
-            <div>
+            <div className="content-wrapper">
+              <ModuleTitle title={this.props.route.title} />
               <MeetupForm
                 eventData={this.state.eventData}
+                isValid={this.state.isValid}
                 onChange={this.setEventState.bind(this)}
                 onSave={this.saveEvent.bind(this)}
-                errors={this.state.errors} />
+                errors={this.state.errors}
+                addGuest={this.addGuest.bind(this)}
+              />
             </div>
           )
     }
 }
 
-export default MeetupComponent;
+
+MeetupComponent.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+MeetupComponent.propTypes = {
+  actions: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+
+  return {
+    eventData: state.eventData,
+  };
+
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(saveMeetupAction, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MeetupComponent);

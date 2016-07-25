@@ -1,12 +1,17 @@
 import React from 'react';
-import firebase from 'firebase'
 import RegisterForm from './registerForm.jsx';
+import ApplicationTitle from '../title/applicationTitle.jsx';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
+import * as userLoginActions from '../actions/userLoginAction'
 import _ from 'lodash';
 
 class Register extends React.Component {
 
     constructor(props, context) {
+
       super(props, context);
+
       this.state = {
         registerData: {
           username: '',
@@ -18,6 +23,7 @@ class Register extends React.Component {
         },
         errors: {}
       }
+
     }
 
     setEventState(event) {
@@ -30,6 +36,18 @@ class Register extends React.Component {
 
      return this.setState({registerData: this.state.registerData});
 
+   }
+
+   register(event) {
+
+     var _this = this;
+
+     event.preventDefault();
+     event.stopPropagation();
+     this.props.actions
+      .registerAndLogin(this.state.registerData.email,
+        this.state.registerData.password,
+        this.state.registerData.username);
    }
 
 
@@ -49,7 +67,6 @@ class Register extends React.Component {
        break;
 
        case 'email':
-       console.log(value.indexOf(emailRegEx));
           if (!value.match(emailRegEx)) {
             errors.email = 'Please fill in a valid email adress';
           } else {
@@ -70,50 +87,10 @@ class Register extends React.Component {
     this.setState({errors: errors});
 
    }
-
-   register(event) {
-     var _this = this;
-     event.preventDefault();
-     event.stopPropagation();
-
-     firebaseApp.auth()
-      .createUserWithEmailAndPassword(this.state.registerData.email, this.state.registerData.password)
-      .catch(function(error) {
-        
-       // Handle Errors here.
-       var errorCode = error.code;
-       var errorMessage = error.message;
-       // ...
-     }).then(function() {
-
-       firebaseApp.auth()
-        .signInWithEmailAndPassword(_this.state.registerData.email, _this.state.registerData.password)
-        .catch(function(error) {
-         console.log(error);
-         // Handle Errors here.
-
-         var errorCode = error.code;
-         var errorMessage = error.message;
-         // ...
-       }).then(function() {
-         var user = firebaseApp.auth().currentUser;
-
-         user.updateProfile({
-           displayName: _this.state.registerData.username,
-         }).then(function() {
-           // Update successful.
-         }, function(error) {
-           // An error happened.
-         });
-       });
-     });
-
-   }
-
     render() {
       return(
-            <div>
-              <h1> Register </h1>
+            <div className="content-wrapper">
+              <ApplicationTitle/>
               <RegisterForm
                 registerData={this.state.registerData}
                 onChange={this.setEventState.bind(this)}
@@ -124,4 +101,20 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+Register.propTypes = {
+  actions: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+    userdata: state.user.userdata,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(userLoginActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

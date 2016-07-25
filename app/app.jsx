@@ -1,46 +1,55 @@
 import React from 'react';
-import Header from './header.jsx'
+import Header from './header.jsx';
+import HeaderMessage from './headerMessages/headerMessage.jsx';
+
+import {connect} from 'react-redux';
 
 class App extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      user: {
-        name: '',
-      },
+ }
+
+ render() {
+   var headerComponent,
+      className,
+      titleComponent;
+
+    if (this.props.userdata && this.props.userdata.displayName) {
+
+      headerComponent = <Header/>;
+      className = 'header-wrap default-header';
+
+    } else {
+      headerComponent = <HeaderMessage />
+      className = 'header-wrap message-header';
     }
-    this.setUser();
-  }
 
-  setUser() {
-    var user = firebaseApp.auth().currentUser;
-
-
-    if (user) {
-      this.setState({user: {
-          name: user.displayName
-        }
-      });
-    }
-    
-    console.log(this.state);
-  }
-
-  render() {
-    console.log('render');
     return(
-
       <div className="app">
-      <div className="header-wrap">
-        <Header user={this.state.user}/>
+      <div className={className}>
+        {headerComponent}
       </div>
-      <main className="event-wrapper">
+      <main className="main">
         {this.props.children}
       </main>
+
     </div>
     );
   }
 }
 
-export default App;
+App.PropTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  userdata: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+    userdata: state.user.userdata,
+    errors: state.user.error
+  };
+}
+
+
+export default connect(mapStateToProps)(App);

@@ -3,14 +3,26 @@ import React from 'react';
 class TextInputComponent extends React.Component {
   render() {
 
-    var wrapperClass = 'form-group';
+    var wrapperClass = 'form-group',
+        iconClass;
 
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += ' ' + 'has-error';
     }
 
+    if (this.props.size) {
+      wrapperClass += ' ' + this.props.size
+    }
+
+    if (this.props.required) {
+      wrapperClass += ' required';
+    }
+
+    iconClass = this.props.icon ? this.props.icon + ' icon-block-small' : ' ';
+
     return(
       <div className={wrapperClass}>
+        <span className={iconClass}></span>
         <label htmlFor={this.props.name}>{this.props.label}</label>
         <div class="field">
           <input type={this.props.type ? this.props.type : 'text'}

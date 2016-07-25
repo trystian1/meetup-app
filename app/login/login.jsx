@@ -1,6 +1,11 @@
 import React from 'react';
 import LoginForm from './loginForm.jsx';
+import ApplicationTitle from '../title/applicationTitle.jsx';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
+import * as userLoginActions from '../actions/userLoginAction'
 import router from 'react-router';
+import {browserHistory} from 'react-router'
 import _ from 'lodash';
 
 class Login extends React.Component {
@@ -12,13 +17,14 @@ class Login extends React.Component {
       this.state = {
         loginData: {
           username: '',
-          password: '',
+          password: ''
         },
         errors: {}
       }
+
     }
 
-    setEventState(event) {
+    setLoginField(event) {
 
      var field = event.target.name,
          value = event.target.value;
@@ -34,20 +40,12 @@ class Login extends React.Component {
 
      event.preventDefault();
      event.stopPropagation();
+     this.props.actions
+      .loginUser(this.state.loginData.username, this.state.loginData.password)
+      .then(() =>{
+        browserHistory.push('/meet-up-form');
+      });
 
-     firebaseApp.auth()
-        .signInWithEmailAndPassword(this.state.loginData.username,
-          this.state.loginData.password)
-        .catch(function(error) {
-         _this.setLoginErrors();
-         // Handle Errors here.
-         var errorCode = error.code;
-         var errorMessage = error.message;
-       // ...
-
-     }).then(function() {
-       _this.onLoginSucces();
-     });
 
    }
 
@@ -62,28 +60,20 @@ class Login extends React.Component {
 
    }
 
-   onLoginSucces() {
+  render() {
 
-     var errors = this.state.errors;
-
-     errors.username = null;
-     errors.password = null;
-
-     this.setState({errors: errors});
-     this.context.router.push('/meet-up');
-
-   }
-
-    render() {
+      var errors = this.props.userdata && this.props.userdata.error
+        ? this.props.userdata.error
+        : this.state.errors;
 
       return(
-            <div>
-              <h1> Login </h1>
+            <div className="content-wrapper">
+              <ApplicationTitle/>
               <LoginForm
                 loginData={this.state.loginData}
-                onChange={this.setEventState.bind(this)}
+                onChange={this.setLoginField.bind(this)}
                 loginFunction={this.login.bind(this)}
-                errors={this.state.errors} />
+                errors={errors} />
             </div>
           )
 
@@ -95,4 +85,20 @@ Login.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-export default Login;
+Login.propTypes = {
+  actions: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+    userdata: state.user.userdata,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(userLoginActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
