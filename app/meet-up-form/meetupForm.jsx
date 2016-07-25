@@ -38,7 +38,7 @@ var  MeetupForm = React.createClass({
           <PlacesAutoSuggestComponent name="place" required="true" label="Location: " locationSearch={true} placeholder="Search place" dataListId="mapList"  error={this.props.errors.place} value={this.props.place} onChange={this.props.onChange} />
           <DateInputComponent icon="icon-calendar" name="startDate"  required="true" label="Start date: " error={this.props.errors.startDate} placeholder="When does your event start" value={this.props.eventData.startDate} onChange={this.props.onChange}/>
           <DateInputComponent name="endDate" required="true" label="End date: " placeholder="When does your event end" error={this.props.errors.endDate} value={this.props.eventData.endDate} onChange={this.props.onChange}/>
-          <SearchInputComponent name="eventType" required="true" label="Type of Event: " placeholder="When does your event start" dataListId="eventList" searchOptions={eventOptions} value={this.props.eventData.eventType} onChange={this.props.onChange} />
+          <SearchInputComponent name="eventType" required="true" label="Type of Event: " placeholder="What type is the type of your event" dataListId="eventList" searchOptions={eventOptions} value={this.props.eventData.eventType} onChange={this.props.onChange} />
 
           <TextInputComponent name="host" label="Host: " type="text" error={this.props.errors.host} placeholder="Who will be the host" value={this.props.eventData.host} onChange={this.props.onChange}/>
 
