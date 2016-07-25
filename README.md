@@ -14,9 +14,9 @@ The application consists of the following parts
  if you are not logged in you will be redirected to the login page
 
 Validations on registering:
-> Username needs to be bigger then 3 characters
-> Email needs to be a valid email adress
-> Password needs to be bigger then 6 characters
+- Username needs to be bigger then 3 characters
+- Email needs to be a valid email adress
+- Password needs to be bigger then 6 characters
 
 
 **Create meetup**
@@ -25,10 +25,10 @@ If you login you will be able to create a meetup.
 The form has some defaults, like the start date is always the date of today.
 
 The form also has some validations.
-> Name, Location, start date and end date are mandatory.
-> Name needs to be longer then 3 chars
-> Start date needs to be before end date.
-> End date needs to be after the start date
+- Name, Location, start date and end date are mandatory.
+- Name needs to be longer then 3 chars
+- Start date needs to be before end date.
+- End date needs to be after the start date
 
 
 **View meetups**
