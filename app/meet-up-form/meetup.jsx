@@ -33,7 +33,7 @@ class MeetupComponent extends React.Component {
 
      var field = event.target.name,
          value = event.target.value;
-     console.log(field);
+
      this.state.eventData[field] = value;
 
      this.validateFormData();
@@ -41,7 +41,6 @@ class MeetupComponent extends React.Component {
      if (this.isValidForm()) {
        this.state.isValid = 'valid';
      }
-     console.log(this.state.errors);
 
      return this.setState({eventData: this.state.eventData});
 
@@ -85,7 +84,6 @@ class MeetupComponent extends React.Component {
             if (!value) {
               errors.endDate = 'A end date is required';
             } else if (moment(value).isBefore(moment(this.state.startDate))) {
-              console.log('end date?');
               errors.endDate = 'End date should be before start date';
             } else {
               errors.endDate = null;

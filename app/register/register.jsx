@@ -48,8 +48,6 @@ class Register extends React.Component {
       .registerAndLogin(this.state.registerData.email,
         this.state.registerData.password,
         this.state.registerData.username);
-
-     console.log(this.props);
    }
 
 
@@ -69,7 +67,6 @@ class Register extends React.Component {
        break;
 
        case 'email':
-       console.log(value.indexOf(emailRegEx));
           if (!value.match(emailRegEx)) {
             errors.email = 'Please fill in a valid email adress';
           } else {
@@ -109,7 +106,6 @@ Register.propTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.user);
   return {
     userdata: state.user.userdata,
   };

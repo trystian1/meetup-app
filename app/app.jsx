@@ -8,7 +8,6 @@ class App extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log(props, context);
  }
 
  render() {
@@ -16,7 +15,6 @@ class App extends React.Component {
       className,
       titleComponent;
 
-    console.log(this.props)
     if (this.props.userdata && this.props.userdata.displayName) {
 
       headerComponent = <Header/>;

@@ -90,7 +90,6 @@ Login.propTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.user);
   return {
     userdata: state.user.userdata,
   };

@@ -6,7 +6,7 @@ class  DateInputComponent extends React.Component{
 
     var wrapperClass = 'form-group',
         iconClass;
-    console.log(this.props.error);
+
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += ' ' + 'has-error';
     }

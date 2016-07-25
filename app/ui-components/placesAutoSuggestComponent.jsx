@@ -7,7 +7,7 @@ class searchInputComponent extends React.Component {
   render() {
 
     var wrapperClass = 'form-group';
-    console.log('search options', this.searchOptions);
+
     if (!this.searchOptions) {
       this.searchOptions = [{key: 1, value: 'aaa'}];
     }
@@ -25,8 +25,6 @@ class searchInputComponent extends React.Component {
     if (this.props.required) {
       wrapperClass += ' required';
     }
-
-    console.log(searchOptions)
 
     return(
       <div className={wrapperClass}>

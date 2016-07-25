@@ -42,12 +42,9 @@ MeetupsPage.propTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.meetups.meetups);
   return {
     meetups: state.meetups.meetups,
   };
-
-
 }
 
 function mapDispatchToProps(dispatch) {
