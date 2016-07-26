@@ -12,22 +12,19 @@ export function loginUser(username, password) {
   return function(dispatch) {
     return firebaseApp.auth()
        .signInWithEmailAndPassword(username, password)
-
-         .catch(error => {
-          dispatch(setLoginErrors(error));
-
-        })
-
         .then(user => {
 
           var userObject = {
-                displayName: user.displayName,
-                email: user.email
-              }
+            displayName: user.displayName,
+            email: user.email
+          }
 
-        dispatch(loginSucces(userObject));
+          dispatch(loginSucces(userObject));
 
-    })
+        })
+        .catch(error => {
+          dispatch(setLoginErrors(error));
+        })
   }
 
 }

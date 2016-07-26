@@ -2,7 +2,7 @@ import React from 'react';
 import TextInputComponent from '../ui-components/textInputComponent.jsx'
 import TextAreaInputComponent from '../ui-components/textAreaInputComponent.jsx'
 import SearchInputComponent from '../ui-components/searchInputComponent.jsx'
-import PlacesAutoSuggestComponent from '../ui-components/PlacesAutoSuggestComponent.jsx'
+import PlacesAutoSuggestComponent from '../ui-components/placesAutoSuggestComponent.jsx'
 import GeneralListComponent from '../ui-components/generalListComponent.jsx'
 import DateInputComponent from '../ui-components/dateInputComponent.jsx'
 
