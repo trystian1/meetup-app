@@ -24,7 +24,7 @@ class TextInputComponent extends React.Component {
       <div className={wrapperClass}>
         <span className={iconClass}></span>
         <label htmlFor={this.props.name}>{this.props.label}</label>
-        <div class="field">
+        <div className="field">
           <input type={this.props.type ? this.props.type : 'text'}
             name={this.props.name}
             className="text-input"

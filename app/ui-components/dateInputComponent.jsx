@@ -21,7 +21,7 @@ class  DateInputComponent extends React.Component{
       <div className={wrapperClass}>
         <span className={iconClass}></span>
         <label htmlFor={this.props.name}>{this.props.label}</label>
-        <div class="field">
+        <div className="field">
           <input type="datetime-local"
             name={this.props.name}
             className="text-input"
