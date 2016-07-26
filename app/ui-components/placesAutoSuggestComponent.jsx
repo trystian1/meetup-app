@@ -1,6 +1,4 @@
 import React from 'react';
-import $ from 'jQuery';
-
 
 class searchInputComponent extends React.Component {
 

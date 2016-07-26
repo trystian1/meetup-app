@@ -19,8 +19,8 @@ export default function loginReducer(state = {}, action) {
           displayName: null,
           email: null,
           error: {
-            username: 'Please check your entered credentials',
-            password: 'Please check your entered credentials'
+            username: action.error.message,
+            password: action.error.message
           }
         },
       })
