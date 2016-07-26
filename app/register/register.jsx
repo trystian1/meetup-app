@@ -1,6 +1,7 @@
 import React from 'react';
 import RegisterForm from './registerForm.jsx';
 import ApplicationTitle from '../title/applicationTitle.jsx';
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import * as userLoginActions from '../actions/userLoginAction'
@@ -47,7 +48,10 @@ class Register extends React.Component {
      this.props.actions
       .registerAndLogin(this.state.registerData.email,
         this.state.registerData.password,
-        this.state.registerData.username);
+        this.state.registerData.username)
+      .then(() =>{
+        browserHistory.push('/meet-up-form');
+      });;
    }
 
 

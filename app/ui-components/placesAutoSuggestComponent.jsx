@@ -28,7 +28,7 @@ class searchInputComponent extends React.Component {
 
     return(
       <div className={wrapperClass}>
-        <div class="field">
+        <div className="field">
           <label htmlFor={this.props.name}>{this.props.label}
           </label>
           <input type='input' list={this.props.dataListId}
