@@ -5,7 +5,6 @@ export default function loginReducer(state = {}, action) {
   switch(action.type) {
 
     case types.LOGIN_USER_SUCCESS:
-
       return Object.assign({}, state, {
           userdata: {
             displayName: action.user.displayName,
@@ -19,11 +18,26 @@ export default function loginReducer(state = {}, action) {
           displayName: null,
           email: null,
           error: {
-            username: action.error.message,
-            password: action.error.message
+            message: action.error.message,
+            username: 'Failed please check credentials',
+            password: 'Failed please check credentials',
+            email: 'Failed please check credentials'
           }
         },
       })
+
+      case types.RESET_ERRORS:
+        return Object.assign({}, state, {
+          userdata: {
+            displayName: state.userdata.displayName,
+            error: {
+              message: null,
+              username: null,
+              password: null,
+              email: null
+            }
+          },
+        })
 
     default:
       return state;

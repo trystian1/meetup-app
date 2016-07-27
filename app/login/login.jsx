@@ -2,10 +2,9 @@ import React from 'react';
 import LoginForm from './loginForm.jsx';
 import ApplicationTitle from '../title/applicationTitle.jsx';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux'
+import {bindActionCreators} from 'redux';
 import * as userLoginActions from '../actions/userLoginAction'
 import router from 'react-router';
-import {browserHistory} from 'react-router'
 import _ from 'lodash';
 
 class Login extends React.Component {
@@ -20,6 +19,14 @@ class Login extends React.Component {
           password: ''
         },
         errors: {}
+      }
+
+    }
+
+    componentWillUnmount() {
+
+      if (!this.props.userdata.email) {
+        this.props.actions.resetErrors();
       }
 
     }
@@ -41,12 +48,7 @@ class Login extends React.Component {
      event.preventDefault();
      event.stopPropagation();
      this.props.actions
-      .loginUser(this.state.loginData.username, this.state.loginData.password)
-      .then(() =>{
-        browserHistory.push('/meet-up-form');
-      });
-
-
+      .loginUser(this.state.loginData.username, this.state.loginData.password);
    }
 
    setLoginErrors() {

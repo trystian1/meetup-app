@@ -3,10 +3,11 @@ import TextInputComponent from '../ui-components/textInputComponent.jsx'
 import { Link } from 'react-router';
 
 var  RegisterForm = React.createClass({
-
   render() {
+    var errorClass = this.props.errors.message ? 'error-message' : 'hidden';
     return(
       <div>
+        <div className={errorClass}>{this.props.errors.message}</div>
         <TextInputComponent name="username" label="Username: " type="text" error={this.props.errors.username} placeholder="Username" value={this.props.registerData.username} onChange={this.props.onChange}/>
         <TextInputComponent name="email" label="email: " type="text" error={this.props.errors.email} placeholder="Username" value={this.props.registerData.email} onChange={this.props.onChange}/>
         <TextInputComponent name="password" label="Password: " type="password" error={this.props.errors.password} placeholder="Password" value={this.props.registerData.password} onChange={this.props.onChange}/>

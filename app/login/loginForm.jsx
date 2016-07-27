@@ -5,8 +5,10 @@ import TextInputComponent from '../ui-components/textInputComponent.jsx'
 var  LoginForm = React.createClass({
 
   render() {
+    var errorClass = this.props.errors.message ? 'error-message' : 'hidden';
     return(
       <div>
+        <div className={errorClass}>{this.props.errors.message}</div>
         <TextInputComponent name="username" label="Email: " type="text" error={this.props.errors.username} placeholder="Email" value={this.props.loginData.username} onChange={this.props.onChange}/>
         <TextInputComponent name="password" label="Password: " type="password" error={this.props.errors.password} placeholder="Password" value={this.props.loginData.password} onChange={this.props.onChange}/>
         <div type="submit" value="Login" className="button" onClick={this.props.loginFunction}>Login </div>
