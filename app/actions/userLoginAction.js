@@ -1,4 +1,5 @@
 import * as types from './actionTypes';
+import {browserHistory} from 'react-router';
 
 export function loginSucces(user)  {
   return {type: types.LOGIN_USER_SUCCESS, user};
@@ -8,7 +9,12 @@ export function setLoginErrors(error) {
   return {type: types.LOGIN_USER_ERROR, error};
 }
 
+export function onResetErrors() {
+  return {type: types.RESET_ERRORS};
+}
+
 export function loginUser(username, password) {
+
   return function(dispatch) {
     return firebaseApp.auth()
        .signInWithEmailAndPassword(username, password)
@@ -20,6 +26,7 @@ export function loginUser(username, password) {
           }
 
           dispatch(loginSucces(userObject));
+          browserHistory.push('/meet-up-form');
 
         })
         .catch(error => {
@@ -32,18 +39,9 @@ export function loginUser(username, password) {
 export function registerAndLogin(email, password, username) {
   return function(dispatch) {
 
-    return firebaseApp.auth()
-          .createUserWithEmailAndPassword(email, password)
-            .catch( error => {
-
-              dispatch(setLoginErrors(error));
-
-            }).then(data => {
-              firebaseApp.auth()
-                .signInWithEmailAndPassword(email, password)
-                  .catch(error => {
-                    dispatch(setLoginErrors(error));
-              }).then(() => {
+    return firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+            .then(data => {
+              firebaseApp.auth().signInWithEmailAndPassword(email, password).then(() => {
 
                 var user = firebaseApp.auth().currentUser;
 
@@ -56,18 +54,27 @@ export function registerAndLogin(email, password, username) {
                     displayName: data.displayName,
                     email: data.email
                   }
-
                   dispatch(loginSucces(userObject));
+                  browserHistory.push('/meet-up-form');
 
-             }, error  => {
-
+             }).catch(error => {
                dispatch(setLoginErrors(error));
-
              });
 
-           });
+           }).catch(error => {
+             dispatch(setLoginErrors(error));
+           })
+
+         }).catch( error => {
+           dispatch(setLoginErrors(error));
 
          });
 
        }
      }
+
+     export function resetErrors() {
+       return function(dispatch) {
+         dispatch(onResetErrors());
+        }
+      }

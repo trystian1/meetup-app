@@ -15,11 +15,9 @@ class App extends React.Component {
       className,
       titleComponent;
 
-    if (this.props.userdata && this.props.userdata.displayName) {
-
+    if (this.props.userdata && this.props.userdata.email) {
       headerComponent = <Header/>;
       className = 'header-wrap default-header';
-
     } else {
       headerComponent = <HeaderMessage />
       className = 'header-wrap message-header';

@@ -27,6 +27,14 @@ class Register extends React.Component {
 
     }
 
+    componentWillUnmount() {
+
+      if (!this.props.userdata.email) {
+        this.props.actions.resetErrors();
+      }
+
+    }
+
     setEventState(event) {
 
      var field = event.target.name,
@@ -48,10 +56,7 @@ class Register extends React.Component {
      this.props.actions
       .registerAndLogin(this.state.registerData.email,
         this.state.registerData.password,
-        this.state.registerData.username)
-      .then(() =>{
-        browserHistory.push('/meet-up-form');
-      });;
+        this.state.registerData.username);
    }
 
 
@@ -92,6 +97,10 @@ class Register extends React.Component {
 
    }
     render() {
+      var errors = this.props.userdata && this.props.userdata.error
+        ? this.props.userdata.error
+        : this.state.errors;
+
       return(
             <div className="content-wrapper">
               <ApplicationTitle/>
@@ -99,7 +108,7 @@ class Register extends React.Component {
                 registerData={this.state.registerData}
                 onChange={this.setEventState.bind(this)}
                 registerFunction={this.register.bind(this)}
-                errors={this.state.errors} />
+                errors={errors} />
             </div>
           )
     }
