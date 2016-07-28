@@ -4,3 +4,4 @@ export const LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
 export const LOAD_MEETUP_SUCCES = 'LOAD_MEETUP_SUCCES';
 export const SAVE_MEETUP_SUCCES = 'SAVE_MEETUP_SUCCES';
 export const RESET_ERRORS = 'RESET_ERRORS';
+export const LOG_OUT = 'LOG_OUT';

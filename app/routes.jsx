@@ -11,12 +11,9 @@ import MeetupComponent from './meet-up-form/meetup.jsx';
 import MeetupsPage from './meet-ups/meetupsPage.jsx';
 import NotFoundPage from './404/404.jsx'
 
-window.onbeforeunload = function() {
-  firebaseApp.auth().signOut();
-}
-
 function isAutenticated(nextState, replace) {
-  var user = firebaseApp.auth().currentUser;
+
+  var user = firebase.auth().currentUser;
 
   if (!user) {
     replace({

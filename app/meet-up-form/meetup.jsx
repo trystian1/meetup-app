@@ -25,7 +25,10 @@ class MeetupComponent extends React.Component {
           message: ''
         },
         isValid: 'invalid',
-        errors: {}
+        errors: {},
+        progress: {
+          completed: '0%'
+        }
       }
     }
 
@@ -37,6 +40,7 @@ class MeetupComponent extends React.Component {
      this.state.eventData[field] = value;
 
      this.validateFormData();
+     this.updateProgress();
 
      if (this.isValidForm()) {
        this.state.isValid = 'valid';
@@ -114,10 +118,27 @@ class MeetupComponent extends React.Component {
 
    }
 
+   updateProgress() {
+
+     var _this = this,
+         completed = 0;
+
+     _.each(this.state.eventData, function(value, key) {
+       if (value && !_this.state.errors[key]) {
+         completed += 100 / Object.keys(_this.state.eventData).length
+       }
+     });
+
+     this.setState({
+       progress: {
+         completed: completed + '%'
+       }
+     })
+   }
+
    isValidForm() {
 
-     var isValid = true,
-         fields = []
+     var isValid = true;
 
      _.each(this.state.errors, function(error) {
 
@@ -174,6 +195,7 @@ class MeetupComponent extends React.Component {
                 onChange={this.setEventState.bind(this)}
                 onSave={this.saveEvent.bind(this)}
                 errors={this.state.errors}
+                progress={this.state.progress}
                 addGuest={this.addGuest.bind(this)}
               />
             </div>

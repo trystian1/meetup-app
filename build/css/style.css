@@ -266,7 +266,32 @@ ul {
 .hidden {
   display: none; }
 
+.logout-button {
+  font-size: 125%;
+  padding: 0;
+  float: right; }
+
+.progress-bar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  opacity: 0.8;
+  text-align: left;
+  top: 0; }
+  .progress-bar .completed {
+    height: 100%;
+    display: inline-block;
+    background-color: #f1c40f; }
+  .progress-bar .uncompleted {
+    height: 100%; }
+
+.completed-text {
+  position: absolute; }
+
 @media screen and (max-width: 900px) {
+  .user-profile {
+    float: none; }
   .content-wrapper {
     width: 98%; }
   .button {

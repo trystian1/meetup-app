@@ -39,6 +39,14 @@ export default function loginReducer(state = {}, action) {
           },
         })
 
+        case types.LOG_OUT:
+          return Object.assign({}, state, {
+            userdata: {
+              displayName: null,
+              email: null,
+            }
+          })
+
     default:
       return state;
   }

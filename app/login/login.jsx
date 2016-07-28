@@ -25,7 +25,7 @@ class Login extends React.Component {
 
     componentWillUnmount() {
 
-      if (!this.props.userdata.email) {
+      if (this.props.userdata && !this.props.userdata.email) {
         this.props.actions.resetErrors();
       }
 

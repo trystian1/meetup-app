@@ -1,10 +1,11 @@
 import React from 'react';
-import TextInputComponent from '../ui-components/textInputComponent.jsx'
-import TextAreaInputComponent from '../ui-components/textAreaInputComponent.jsx'
-import SearchInputComponent from '../ui-components/searchInputComponent.jsx'
-import PlacesAutoSuggestComponent from '../ui-components/placesAutoSuggestComponent.jsx'
-import GeneralListComponent from '../ui-components/generalListComponent.jsx'
-import DateInputComponent from '../ui-components/dateInputComponent.jsx'
+import TextInputComponent from '../ui-components/textInputComponent.jsx';
+import TextAreaInputComponent from '../ui-components/textAreaInputComponent.jsx';
+import SearchInputComponent from '../ui-components/searchInputComponent.jsx';
+import PlacesAutoSuggestComponent from '../ui-components/placesAutoSuggestComponent.jsx';
+import GeneralListComponent from '../ui-components/generalListComponent.jsx';
+import DateInputComponent from '../ui-components/dateInputComponent.jsx';
+import ProgressBarComponent from '../ui-components/progressBarComponent.jsx';
 
 var  MeetupForm = React.createClass({
 
@@ -51,7 +52,9 @@ var  MeetupForm = React.createClass({
         </form>
         <div className="button-bar">
           <div type="submit" value="Save" className={buttonClass} onClick={this.props.onSave}> <span className="icon-checkmark3"> </span>Create event</div>
+          <ProgressBarComponent progress={this.props.progress} />
         </div>
+
     </div>
     )
   },
