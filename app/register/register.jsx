@@ -29,7 +29,7 @@ class Register extends React.Component {
 
     componentWillUnmount() {
 
-      if (!this.props.userdata.email) {
+      if (this.props.userdata && !this.props.userdata.email) {
         this.props.actions.resetErrors();
       }
 
@@ -47,12 +47,31 @@ class Register extends React.Component {
 
    }
 
+   isRegisterFormValid() {
+
+     var isValid = true;
+
+     _.each(this.state.errors, function(error) {
+
+       if (error) {
+         isValid = false;
+       }
+
+     });
+
+     return isValid;
+   }
+
    register(event) {
 
      var _this = this;
 
      event.preventDefault();
      event.stopPropagation();
+     if (!this.isRegisterFormValid()) {
+       return;
+     }
+
      this.props.actions
       .registerAndLogin(this.state.registerData.email,
         this.state.registerData.password,

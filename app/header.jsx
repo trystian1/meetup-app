@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {browserHistory} from 'react-router';
+import * as userLoginActions from './actions/userLoginAction'
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -8,6 +11,11 @@ class Header extends React.Component {
   }
 
   render() {
+
+    var userName = this.props.userdata.displayName
+      ? this.props.userdata.displayName
+      : this.props.userdata.email;
+
     return(
       <div>
         <div className="application-name"><h1 className="application-name-text">Meetey</h1></div>
@@ -18,10 +26,15 @@ class Header extends React.Component {
             </ul>
           </aside>
         <div className="user-profile"><div className="user-profile-icon"><span className="icon-user"></span></div>
-        <div className="username">{this.props.userdata.displayName}</div></div>
+        <div className="username">{userName}</div> <div className="button logout-button" onClick={this.logout.bind(this)}> Logout </div> </div>
       </div>
     )
   }
+
+  logout() {
+    this.props.actions.logout();
+  }
+
 }
 
 Header.PropTypes = {
@@ -29,11 +42,17 @@ Header.PropTypes = {
   userdata: React.PropTypes.object.isRequired
 }
 
+
 function mapStateToProps(state, ownProps) {
   return {
     userdata: state.user.userdata
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(userLoginActions, dispatch)
+  }
+}
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
