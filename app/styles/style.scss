@@ -333,6 +333,7 @@ ul {
   opacity: 0.8;
   text-align: left;
   top: 0;
+  z-index: -1;
   .completed {
     height: 100%;
     display:inline-block;
@@ -344,6 +345,13 @@ ul {
 }
 .completed-text {
   position:absolute;
+}
+.map-element {
+  height: 100%;
+  left: 0;
+}
+.map-wrap {
+  height: 400px;
 }
 //module-sub-title
 @media screen and (max-width: 900px) {

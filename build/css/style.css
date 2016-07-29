@@ -278,7 +278,8 @@ ul {
   left: 0;
   opacity: 0.8;
   text-align: left;
-  top: 0; }
+  top: 0;
+  z-index: -1; }
   .progress-bar .completed {
     height: 100%;
     display: inline-block;
@@ -288,6 +289,13 @@ ul {
 
 .completed-text {
   position: absolute; }
+
+.map-element {
+  height: 100%;
+  left: 0; }
+
+.map-wrap {
+  height: 400px; }
 
 @media screen and (max-width: 900px) {
   .user-profile {

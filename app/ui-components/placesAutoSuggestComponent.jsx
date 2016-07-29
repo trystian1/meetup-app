@@ -49,12 +49,24 @@ class searchInputComponent extends React.Component {
   }
 
   searchValue(evt) {
-    var value = evt.target.value,
-        service = new google.maps.places.AutocompleteService();
+
+    var _this = this,
+        value = evt.target.value,
+        service = new google.maps.places.AutocompleteService(),
+        geocoder = new google.maps.Geocoder;
+
     if (value) {
       service.getQueryPredictions({ input: value}, this.callback.bind(this));
     }
+
+    geocoder.geocode({'placeId': this.searchOptions[0].placeId}, function(result, status) {
+        if (status === 'OK') {
+          _this.props.setPlace(result);
+        }
+    });
+
     this.props.onChange(evt);
+
   }
 
   callback(results, status) {
@@ -63,16 +75,17 @@ class searchInputComponent extends React.Component {
 
     _.each(results, function(result) {
       id++;
+
       optionsArray.push(
         {
           key: id,
-          value: result.description
+          value: result.description,
+          placeId: result.place_id
         }
       )
     });
 
     this.searchOptions = optionsArray;
-
 
   }
 
