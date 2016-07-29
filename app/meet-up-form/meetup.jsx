@@ -28,7 +28,8 @@ class MeetupComponent extends React.Component {
         errors: {},
         progress: {
           completed: '0%'
-        }
+        },
+        place: {}
       }
     }
 
@@ -118,6 +119,14 @@ class MeetupComponent extends React.Component {
 
    }
 
+   setPlace(data) {
+
+      this.setState({
+        place: data
+      });
+
+   }
+
    updateProgress() {
 
      var _this = this,
@@ -196,6 +205,8 @@ class MeetupComponent extends React.Component {
                 onSave={this.saveEvent.bind(this)}
                 errors={this.state.errors}
                 progress={this.state.progress}
+                place={this.state.place}
+                setPlace={this.setPlace.bind(this)}
                 addGuest={this.addGuest.bind(this)}
               />
             </div>
