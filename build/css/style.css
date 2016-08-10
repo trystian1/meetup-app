@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url("./icomoon.eot?oz1eot");
+  src: url("./icomoon.eot?oz1eot#iefix") format("embedded-opentype"), url("./icomoon.ttf?oz1eot") format("truetype"), url("./icomoon.woff?oz1eot") format("woff"), url("./icomoon.svg?oz1eot#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
 .user-profile {
   float: right; }
 
@@ -151,6 +158,28 @@ ul {
 .has-error .text-input {
   color: #e74c3c;
   border-color: #e74c3c !important; }
+
+.password-checker {
+  margin-bottom: 20px;
+  margin-top: -30px; }
+  .password-checker li {
+    display: block; }
+
+.validation-error {
+  color: #e74c3c; }
+
+.validation-error:before {
+  font-family: 'icomoon';
+  content: "\ea0f";
+  margin-right: 10px; }
+
+.validation-ok {
+  color: #27ae60; }
+
+.validation-ok:before {
+  font-family: 'icomoon';
+  content: "\ea10";
+  margin-right: 10px; }
 
 .input-error {
   color: #e74c3c; }

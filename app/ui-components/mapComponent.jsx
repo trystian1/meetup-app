@@ -12,7 +12,7 @@ class MapComponent extends React.Component {
     document.getElementsByTagName('head')[0].appendChild(script);
 
     window.initMap = () => {
-
+      _this.markers = [];
       var latlng = new google.maps.LatLng(52.2616391, 4.7693348);
 
       _this.map = new google.maps.Map(_this.refs.map, {
@@ -29,13 +29,22 @@ class MapComponent extends React.Component {
     var place = this.props.place;
 
     if (this.map && this.props.place[0]) {
+      console.log(this.markers);
 
       this.map.setCenter(this.props.place[0].geometry.location);
+      // clear all markers
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+
+      this.markers = [];
 
       var marker = new google.maps.Marker({
         map: this.map,
         position: this.props.place[0].geometry.location
       });
+
+      this.markers.push(marker)
 
     }
 
@@ -62,7 +71,7 @@ class MapComponent extends React.Component {
 
 
 MapComponent.propTypes = {
-    place: React.PropTypes.object.isRequired,
+    place: React.PropTypes.array.isRequired,
 }
 
 export default MapComponent;

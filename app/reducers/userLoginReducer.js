@@ -12,6 +12,7 @@ export default function loginReducer(state = {}, action) {
             error: null
           }
       })
+      
     case types.LOGIN_USER_ERROR:
       return Object.assign({}, state, {
         userdata: {

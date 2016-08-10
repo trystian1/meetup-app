@@ -5,11 +5,16 @@ class  DateInputComponent extends React.Component{
   render() {
 
     var wrapperClass = 'form-group',
+        inputType = this.props.type
+          ? this.props.type
+          : 'datetime-local',
         iconClass;
 
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += ' ' + 'has-error';
     }
+
+
 
     if (this.props.required) {
       wrapperClass += ' required';
@@ -22,7 +27,8 @@ class  DateInputComponent extends React.Component{
         <span className={iconClass}></span>
         <label htmlFor={this.props.name}>{this.props.label}</label>
         <div className="field">
-          <input type="datetime-local"
+          <input type={inputType}
+            id={this.props.name}
             name={this.props.name}
             className="text-input"
             placeholder={this.props.placeholder}

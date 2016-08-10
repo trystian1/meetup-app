@@ -3,7 +3,13 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: './app/main.js',
-  output: { path: __dirname, filename: 'bundle.js' },
+  output: {
+    path: __dirname,
+    filename: 'bundle.min.js'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ],
   devServer: {
     historyApiFallback: true
   },
@@ -16,6 +22,10 @@ module.exports = {
         query: {
           presets: ['es2015', 'react'],
         },
+      },
+      {
+        test: /\.scss$/,
+        loader: "style!css!sass"
       }
     ]
   },

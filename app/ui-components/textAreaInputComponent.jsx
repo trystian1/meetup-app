@@ -26,6 +26,7 @@ class TextAreaInputComponent extends React.Component {
         <label htmlFor={this.props.name}>{this.props.label}</label>
           <div className="field">
           <textarea type={this.props.type ? this.props.type : 'text'}
+            id={this.props.name}
             name={this.props.name}
             className="text-input"
             placeholder={this.props.placeholder}
