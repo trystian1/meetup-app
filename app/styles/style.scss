@@ -378,7 +378,23 @@ ul {
 .map-wrap {
   height: 400px;
 }
+
 //module-sub-title
+@media screen and (max-width: 1300px) {
+    .user-profile {
+      float: none;
+    }
+    .content-wrapper {
+      width: 75%;
+    }
+    .button {
+      width: 75%;
+    }
+    .logout-button {
+      width: 25%;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .user-profile {
       float: none;
@@ -388,5 +404,8 @@ ul {
     }
     .button {
       width: 90%;
+    }
+    .logout-button {
+      width: 25%;
     }
 }
