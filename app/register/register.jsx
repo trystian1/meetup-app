@@ -49,7 +49,7 @@ class Register extends React.Component {
          value = event.target.value;
 
      this.state.registerData[field] = value;
-     this.validateInput(field, value);
+     this.validateFormData();
 
      return this.setState({registerData: this.state.registerData});
 
@@ -76,6 +76,7 @@ class Register extends React.Component {
 
      event.preventDefault();
      event.stopPropagation();
+
      if (!this.isRegisterFormValid()) {
        return;
      }
@@ -86,6 +87,14 @@ class Register extends React.Component {
         this.state.registerData.username);
    }
 
+   validateFormData() {
+     var _this = this;
+
+     _.each(this.state.registerData, function(value, key) {
+       _this.validateInput(key, value);
+     });
+
+   }
 
    validateInput(field, value) {
 

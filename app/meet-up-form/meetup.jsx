@@ -42,7 +42,7 @@ class MeetupComponent extends React.Component {
 
      this.validateFormData();
      this.updateProgress();
-     console.log(this.state.errors);
+
      if (this.isValidForm()) {
        this.state.isValid = 'valid';
      }
@@ -85,6 +85,8 @@ class MeetupComponent extends React.Component {
              errors.startDate = 'Start date should be before end date';
            } else if (moment(value).isBefore(yesterday)) {
              errors.startDate = 'Start date cannot be in the past';
+           } else if (moment(value).isSame(moment(this.state.eventData.endDate))) {
+              errors.startDate = 'Start date cannot be in the same as the end date';
            } else {
              errors.startDate = null;
            }
@@ -95,6 +97,8 @@ class MeetupComponent extends React.Component {
               errors.endDate = 'A end date is required';
             } else if (moment(value).isBefore(moment(this.state.eventData.startDate))) {
               errors.endDate = 'End date should be after start date';
+            } else if (moment(value).isSame(moment(this.state.eventData.startDate))) {
+              errors.endDate = 'End date can\'t be same as the start date';
             } else {
               errors.endDate = null;
             }
