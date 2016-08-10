@@ -18,11 +18,19 @@ class Register extends React.Component {
           username: '',
           email: '',
           password: '',
+          job: '',
+          birtDate: ''
         },
         user: {
           name: ''
         },
-        errors: {}
+        errors: {},
+        validations: {
+          passwordLength: false,
+          passwordSpecialChar: false,
+          passwordNumber: false,
+          passwordUpperCase: false
+        }
       }
 
     }
@@ -82,6 +90,7 @@ class Register extends React.Component {
    validateInput(field, value) {
 
     var errors = this.state.errors,
+        validations = this.state.validations,
         emailRegEx = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
 
     switch(field) {
@@ -103,9 +112,36 @@ class Register extends React.Component {
         break;
 
         case 'password':
-           if (value.length < 6) {
-             errors.password = 'Password should be atleast 6 characters';
+
+           if (value.length < 8) {
+             validations.passwordLength = false;
+             errors.password = 'Password should be atleast 8 characters';
            } else {
+             errors.password = null;
+             this.state.validations.passwordLength = true;
+           }
+
+           if (!value.match(/\d/)) {
+             validations.passwordNumber = false;
+             errors.password = 'Password should have one digit';
+           } else {
+             validations.passwordNumber = true;
+             errors.password = null;
+           }
+
+           if (!value.match(/[A-Z]/)) {
+             validations.passwordUpperCase = false;
+             errors.password = 'Password should have one uppercase character';
+           } else {
+              validations.passwordUpperCase = true;
+              errors.password = null;
+           }
+
+           if (!value.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+             validations.passwordSpecialChar = false;
+             errors.password = 'Password should have one uppercase character';
+           } else {
+             validations.passwordSpecialChar = true;
              errors.password = null;
            }
          break;
@@ -127,6 +163,7 @@ class Register extends React.Component {
                 registerData={this.state.registerData}
                 onChange={this.setEventState.bind(this)}
                 registerFunction={this.register.bind(this)}
+                validations={this.state.validations}
                 errors={errors} />
             </div>
           )

@@ -1,3 +1,4 @@
+
 .user-profile {
   float:right;
 }
@@ -185,6 +186,30 @@ ul {
     color: #e74c3c;
     border-color: #e74c3c!important;
   }
+}
+.password-checker {
+  li {
+    display: block;
+  }
+  margin-bottom: 20px;
+  margin-top: -30px;
+
+}
+.validation-error {
+  color: #e74c3c;
+}
+.validation-error:before {
+  font-family: 'icomoon';
+  content: "\ea0f";
+  margin-right: 10px;
+}
+.validation-ok {
+    color: #27ae60;
+}
+.validation-ok:before {
+  font-family: 'icomoon';
+  content: "\ea10";
+  margin-right: 10px;
 }
 
 .input-error {

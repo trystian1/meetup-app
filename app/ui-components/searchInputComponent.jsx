@@ -25,6 +25,7 @@ class searchInputComponent extends React.Component {
         <div className="field">
           <label htmlFor={this.props.name}>{this.props.label}
             <input type='input' list={this.props.dataListId}
+              id={this.props.name}
               name={this.props.name}
               className="text-input"
               placeholder={this.props.placeholder}

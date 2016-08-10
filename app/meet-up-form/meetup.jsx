@@ -29,7 +29,7 @@ class MeetupComponent extends React.Component {
         progress: {
           completed: '0%'
         },
-        place: {}
+        place: []
       }
     }
 
@@ -42,7 +42,7 @@ class MeetupComponent extends React.Component {
 
      this.validateFormData();
      this.updateProgress();
-
+     console.log(this.state.errors);
      if (this.isValidForm()) {
        this.state.isValid = 'valid';
      }
@@ -53,7 +53,8 @@ class MeetupComponent extends React.Component {
 
    validateInput(field, value) {
 
-     var errors = this.state.errors;
+     var errors = this.state.errors,
+         yesterday = moment().subtract(1, 'days');
 
      switch(field) {
 
@@ -76,10 +77,14 @@ class MeetupComponent extends React.Component {
          break;
 
          case 'startDate':
+            console.log(value, this.state.eventData.endDate, moment(), this.state)
            if (!value) {
              errors.startDate = 'A start date is required';
-           } else if (moment(value).isAfter(moment(this.state.endDate))) {
+           } else if (this.state.endDate
+             && moment(value).isAfter(moment(this.state.eventData.endDate))) {
              errors.startDate = 'Start date should be before end date';
+           } else if (moment(value).isBefore(yesterday)) {
+             errors.startDate = 'Start date cannot be in the past';
            } else {
              errors.startDate = null;
            }
@@ -88,13 +93,37 @@ class MeetupComponent extends React.Component {
           case 'endDate':
             if (!value) {
               errors.endDate = 'A end date is required';
-            } else if (moment(value).isBefore(moment(this.state.startDate))) {
-              errors.endDate = 'End date should be before start date';
+            } else if (moment(value).isBefore(moment(this.state.eventData.startDate))) {
+              errors.endDate = 'End date should be after start date';
             } else {
               errors.endDate = null;
             }
            break;
 
+         case 'eventType':
+           if (!value) {
+             errors.eventType = 'A event type is required';
+           } else {
+             errors.eventType = null;
+           }
+          break;
+
+
+         case 'host':
+           if (!value) {
+             errors.host = 'Your event needs to have a host'
+           } else {
+             errors.host = null
+           }
+           break;
+
+        case 'guest':
+          if (!this.state.eventData.guests.length) {
+            errors.guest = 'Atleast one guest is required'
+          } else {
+            errors.guest = null
+          }
+          break;
      }
 
      this.setState({errors: errors});
@@ -112,10 +141,17 @@ class MeetupComponent extends React.Component {
       key: new Date().valueOf()
     }
     guests.push(guestItem);
+
+    this.state.errors.guest = null;
+
     this.setState({
       guests: guests,
       guest: null
-    })
+    });
+
+    if (this.isValidForm()) {
+      this.state.isValid = 'valid';
+    }
 
    }
 
