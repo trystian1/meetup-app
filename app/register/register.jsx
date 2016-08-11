@@ -57,7 +57,7 @@ class Register extends React.Component {
 
    }
 
-   isValidForm() {
+   isFormValid() {
      var isValid = true;
 
      _.each(this.getFormErrors(), function(errorObject, value) {
@@ -92,7 +92,7 @@ class Register extends React.Component {
      event.preventDefault();
      event.stopPropagation();
 
-     if (!this.isRegisterFormValid()) {
+     if (!this.isFormValid()) {
        return;
      }
 
