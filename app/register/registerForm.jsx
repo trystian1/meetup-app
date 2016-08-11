@@ -27,12 +27,12 @@ var  RegisterForm = React.createClass({
         </ul>
         <h2> Additional information: </h2>
         <TextInputComponent name="job" label="Occupation: " type="text" error={this.props.errors.job} placeholder="What is you job title?" value={this.props.registerData.job} onChange={this.props.onChange}/>
-        <DateInputComponent name="birthDate" label="Date of birth: " type="date" error={this.props.errors.birtDate} value={this.props.registerData.birtDate} onChange={this.props.onChange}/>
-        <div type="submit" className="button" onClick={this.props.registerFunction}> Register </div>
+        <DateInputComponent name="birthDate" label="Date of birth: " type="date" error={this.props.errors.birthDate} value={this.props.registerData.birthDate} onChange={this.props.onChange}/>
+        <button type="submit" className="button" onClick={this.props.registerFunction}> Register </button>
         <div>
           <span className="help-text">Do you already have an account?</span>
           <Link to="login" activeClassName="active" className="button primary">
-            <div type="submit" value="Login">Login</div>
+            Login
           </Link>
         </div>
       </div>

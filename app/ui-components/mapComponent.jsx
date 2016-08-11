@@ -29,7 +29,6 @@ class MapComponent extends React.Component {
     var place = this.props.place;
 
     if (this.map && this.props.place[0]) {
-      console.log(this.markers);
 
       this.map.setCenter(this.props.place[0].geometry.location);
       // clear all markers

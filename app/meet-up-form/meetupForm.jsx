@@ -49,7 +49,7 @@ var  MeetupForm = React.createClass({
           <TextAreaInputComponent name="message" label="A message for your guests:" type="textarea" className="inline-input" placeholder="Describe how awesome your event is going to be" onChange={this.props.onChange} value={this.props.eventData.message}/>
         </form>
         <div className="button-bar">
-          <div type="submit" value="Save" className={buttonClass} onClick={this.props.onSave}> <span className="icon-checkmark3"> </span>Create event</div>
+          <button type="submit" value="Save" className={buttonClass} onClick={this.props.onSave}> <span className="icon-checkmark3"> </span>Create event</button>
           <ProgressBarComponent progress={this.props.progress} />
         </div>
 
