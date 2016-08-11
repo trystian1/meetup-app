@@ -36,16 +36,17 @@ class MeetupComponent extends React.Component {
     setEventState(event) {
 
      var field = event.target.name,
-         value = event.target.value;
+         value = event.target.value,
+         errors;
 
      this.state.eventData[field] = value;
+     errors = this.validateInput(field, value);
 
-     this.validateFormData();
+     this.state.errors[field] = errors[field];
+
      this.updateProgress();
 
-     if (this.isValidForm()) {
-       this.state.isValid = 'valid';
-     }
+     this.state.isValid = this.isValidForm() ? 'valid' : 'invalid'
 
      return this.setState({eventData: this.state.eventData});
 
@@ -53,7 +54,7 @@ class MeetupComponent extends React.Component {
 
    validateInput(field, value) {
 
-     var errors = this.state.errors,
+     var errors = {},
          yesterday = moment().subtract(1, 'days');
 
      switch(field) {
@@ -77,7 +78,6 @@ class MeetupComponent extends React.Component {
          break;
 
          case 'startDate':
-            console.log(value, this.state.eventData.endDate, moment(), this.state)
            if (!value) {
              errors.startDate = 'A start date is required';
            } else if (this.state.endDate
@@ -130,7 +130,8 @@ class MeetupComponent extends React.Component {
           break;
      }
 
-     this.setState({errors: errors});
+     //this.setState({errors: errors});
+     return errors;
 
    }
 
@@ -189,23 +190,28 @@ class MeetupComponent extends React.Component {
 
      var isValid = true;
 
-     _.each(this.state.errors, function(error) {
+     _.each(this.getFormErrors(), function(errorObject, value) {
 
-       if (error) {
+       if (errorObject.error) {
          isValid = false;
        }
 
      });
 
      return isValid;
+
    }
 
-   validateFormData() {
-     var _this = this;
+   getFormErrors() {
+
+     var _this = this,
+        errors = [];
 
      _.each(this.state.eventData, function(value, key) {
-       _this.validateInput(key, value);
+       errors.push({error: _this.validateInput(key, value)[key]});
      });
+
+     return errors;
 
    }
 
@@ -214,7 +220,6 @@ class MeetupComponent extends React.Component {
      event.preventDefault();
      event.stopPropagation();
 
-     this.validateFormData();
      this.formatDates();
      if (!this.isValidForm()) {
        return;

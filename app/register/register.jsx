@@ -19,7 +19,7 @@ class Register extends React.Component {
           email: '',
           password: '',
           job: '',
-          birtDate: ''
+          birthDate: ''
         },
         user: {
           name: ''
@@ -46,28 +46,43 @@ class Register extends React.Component {
     setEventState(event) {
 
      var field = event.target.name,
-         value = event.target.value;
+         value = event.target.value,
+         errors;
 
      this.state.registerData[field] = value;
-     this.validateFormData();
+     errors = this.validateInput(field, value);
+     this.state.errors[field] = errors[field];
 
      return this.setState({registerData: this.state.registerData});
 
    }
 
-   isRegisterFormValid() {
-
+   isValidForm() {
      var isValid = true;
 
-     _.each(this.state.errors, function(error) {
+     _.each(this.getFormErrors(), function(errorObject, value) {
 
-       if (error) {
+       if (errorObject.error) {
          isValid = false;
        }
 
      });
 
      return isValid;
+
+   }
+
+   getFormErrors() {
+
+     var _this = this,
+        errors = [];
+
+     _.each(this.state.eventData, function(value, key) {
+       errors.push({error: _this.validateInput(key, value)[key]});
+     });
+
+     return errors;
+
    }
 
    register(event) {
@@ -98,7 +113,7 @@ class Register extends React.Component {
 
    validateInput(field, value) {
 
-    var errors = this.state.errors,
+    var errors = {},
         validations = this.state.validations,
         emailRegEx = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
 
@@ -157,7 +172,7 @@ class Register extends React.Component {
 
     }
 
-    this.setState({errors: errors});
+    return errors;
 
    }
     render() {
